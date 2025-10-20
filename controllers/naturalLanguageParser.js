@@ -4,42 +4,48 @@ class NaturalLanguageParser {
     const filters = {};
 
     try {
-      // Parse for palindrome
+      // Palindrome
       if (lowerQuery.includes('palindrome')) {
-        filters.is_palindrome = true;
+        filters.is_palindrome = !lowerQuery.includes('non');
       }
 
-      // Parse for single word
+      // Word count
       if (lowerQuery.includes('single word') || lowerQuery.includes('one word')) {
         filters.word_count = 1;
       }
+      const wordCountMatch = lowerQuery.match(/(\d+)\s+words?/);
+      if (wordCountMatch) {
+        filters.word_count = parseInt(wordCountMatch[1]);
+      }
 
-      // Parse for length conditions
+      // Length conditions
       const longerThanMatch = lowerQuery.match(/longer than (\d+) characters?/);
       if (longerThanMatch) {
         filters.min_length = parseInt(longerThanMatch[1]) + 1;
       }
-
       const shorterThanMatch = lowerQuery.match(/shorter than (\d+) characters?/);
       if (shorterThanMatch) {
         filters.max_length = parseInt(shorterThanMatch[1]) - 1;
       }
 
-      // Parse for character containment
-      const containsMatch = lowerQuery.match(/contain(s|ing)? (the letter |the character )?([a-z])/);
-      if (containsMatch) {
-        filters.contains_character = containsMatch[3];
+      // Character containment
+      const multipleCharsMatch = lowerQuery.match(/contain(?:s|ing)? (?:the letters |letters )([a-z,\s]+)/);
+      if (multipleCharsMatch) {
+        filters.contains_characters = multipleCharsMatch[1].replace(/\s+/g, '').split(',');
+      } else {
+        const containsMatch = lowerQuery.match(/contain(?:s|ing)? (?:the letter |the character )?([a-z])/);
+        if (containsMatch) {
+          filters.contains_character = containsMatch[1];
+        }
       }
 
-      // Parse for specific character mentions (like "first vowel")
+      // Heuristic vowel reference
       if (lowerQuery.includes('first vowel') || lowerQuery.includes('letter a')) {
         filters.contains_character = 'a';
       }
 
-      // Parse for exact word count
-      const wordCountMatch = lowerQuery.match(/(\d+) words?/);
-      if (wordCountMatch) {
-        filters.word_count = parseInt(wordCountMatch[1]);
+      if (Object.keys(filters).length === 0) {
+        throw new Error('Unable to parse natural language query');
       }
 
       return {
@@ -53,13 +59,9 @@ class NaturalLanguageParser {
   }
 
   validateFilters(filters) {
-    // Check for conflicting filters
-    if (filters.min_length !== undefined && filters.max_length !== undefined) {
-      if (filters.min_length > filters.max_length) {
-        throw new Error('Conflicting filters: min_length cannot be greater than max_length');
-      }
+    if (filters.min_length && filters.max_length && filters.min_length > filters.max_length) {
+      throw new Error('Conflicting filters: min_length cannot be greater than max_length');
     }
-
     return true;
   }
 }

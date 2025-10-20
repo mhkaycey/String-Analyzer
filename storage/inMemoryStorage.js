@@ -1,8 +1,7 @@
 import crypto from 'crypto';
 class InMemoryStorage {
   constructor() {
-    this.strings = new Map(); // Using SHA256 hash as key
-  }
+    this.strings = new Map(); }
 
   save(stringData) {
     this.strings.set(stringData.id, stringData);
