@@ -1,0 +1,22 @@
+{
+  "name": "stage1",
+  "version": "0.0.0",
+  "private": true,
+  "main": "app.js",
+  "description": "RESTful API for analyzing strings",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "Egede Kelechukwu Mark <kelechimark041@gmail.com",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "crypto": "^1.0.1",
+    "debug": "~2.6.9",
+    "dotenv": "^17.2.3",
+    "express": "~4.16.1",
+    "morgan": "~1.9.1"
+  }
+}
