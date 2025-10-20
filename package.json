@@ -1,8 +1,7 @@
 {
   "name": "stage1",
   "version": "0.0.0",
-  "private": true,
-  "main": "app.js",
+  "main": "server.js",
   "description": "RESTful API for analyzing strings",
   "scripts": {
     "start": "node server.js",
