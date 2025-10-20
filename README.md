@@ -4,23 +4,23 @@ This project provides a robust Node.js Express API for performing deep analysis 
 
 ## 🚀 Features
 
-*   **Comprehensive String Analysis**: Automatically calculates length, identifies palindromes, counts words, determines unique characters, generates SHA256 hashes, and provides a character frequency map.
-*   **Persistent In-Memory Storage**: Stores analyzed strings for quick retrieval and querying (though in a real-world scenario, this would be a database).
-*   **Standard CRUD Operations**: API endpoints for creating (analyzing), retrieving by value, listing all, and deleting strings.
-*   **Advanced Filtering**: Supports filtering strings based on properties like palindrome status, length, word count, and character containment using query parameters.
-*   **Natural Language Processing (NLP) Filter**: An innovative endpoint that allows users to filter strings using descriptive natural language queries (e.g., "strings longer than 5 characters containing 'a'").
-*   **Robust Input Validation**: Middleware ensures all incoming data and query parameters meet expected formats and constraints, enhancing API reliability.
-*   **Health Check Endpoint**: Provides a simple `/health` endpoint for monitoring application status.
+- **Comprehensive String Analysis**: Automatically calculates length, identifies palindromes, counts words, determines unique characters, generates SHA256 hashes, and provides a character frequency map.
+- **Persistent In-Memory Storage**: Stores analyzed strings for quick retrieval and querying (though in a real-world scenario, this would be a database).
+- **Standard CRUD Operations**: API endpoints for creating (analyzing), retrieving by value, listing all, and deleting strings.
+- **Advanced Filtering**: Supports filtering strings based on properties like palindrome status, length, word count, and character containment using query parameters.
+- **Natural Language Processing (NLP) Filter**: An innovative endpoint that allows users to filter strings using descriptive natural language queries (e.g., "strings longer than 5 characters containing 'a'").
+- **Robust Input Validation**: Middleware ensures all incoming data and query parameters meet expected formats and constraints, enhancing API reliability.
+- **Health Check Endpoint**: Provides a simple `/health` endpoint for monitoring application status.
 
 ## 🛠️ Technologies Used
 
-| Technology         | Description                                     | Link                                            |
-| :----------------- | :---------------------------------------------- | :---------------------------------------------- |
-| **Node.js**        | JavaScript runtime built on Chrome's V8 engine. | [nodejs.org](https://nodejs.org/)               |
-| **Express.js**     | Fast, unopinionated, minimalist web framework.  | [expressjs.com](https://expressjs.com/)         |
-| **`dotenv`**       | Loads environment variables from a `.env` file. | [npmjs.com/package/dotenv](https://www.npmjs.com/package/dotenv) |
-| **`morgan`**       | HTTP request logger middleware for node.js.     | [npmjs.com/package/morgan](https://www.npmjs.com/package/morgan) |
-| **`crypto`**       | Node.js built-in module for cryptographic functionality. | [nodejs.org/api/crypto.html](https://nodejs.org/api/crypto.html) |
+| Technology     | Description                                              | Link                                                             |
+| :------------- | :------------------------------------------------------- | :--------------------------------------------------------------- |
+| **Node.js**    | JavaScript runtime built on Chrome's V8 engine.          | [nodejs.org](https://nodejs.org/)                                |
+| **Express.js** | Fast, unopinionated, minimalist web framework.           | [expressjs.com](https://expressjs.com/)                          |
+| **`dotenv`**   | Loads environment variables from a `.env` file.          | [npmjs.com/package/dotenv](https://www.npmjs.com/package/dotenv) |
+| **`morgan`**   | HTTP request logger middleware for node.js.              | [npmjs.com/package/morgan](https://www.npmjs.com/package/morgan) |
+| **`crypto`**   | Node.js built-in module for cryptographic functionality. | [nodejs.org/api/crypto.html](https://nodejs.org/api/crypto.html) |
 
 ## 🚀 Getting Started
 
@@ -30,8 +30,8 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 1.  **Clone the Repository**:
     ```bash
-    git clone <repository-url>
-    cd stage1 # Or your project directory name
+    git clone <https://github.com/mhkaycey/String-Analyzer>
+    cd String-Analyzer # Or your project directory name
     ```
 2.  **Install Dependencies**:
     ```bash
@@ -49,8 +49,8 @@ PORT=3000
 SERVER_URL=http://localhost:
 ```
 
-*   **`PORT`**: The port number on which the Express server will listen.
-*   **`SERVER_URL`**: The base URL of the server (e.g., `http://localhost:`). Used for console logs.
+- **`PORT`**: The port number on which the Express server will listen.
+- **`SERVER_URL`**: The base URL of the server (e.g., `http://localhost:`). Used for console logs.
 
 ### ▶️ Usage
 
@@ -71,20 +71,25 @@ npm start
 ## 📚 API Documentation
 
 ### Base URL
+
 `http://localhost:PORT/strings` (replace `PORT` with your configured port, e.g., `3000`)
 
 ### Endpoints
 
 #### `POST /strings`
+
 Analyzes a given string and stores its properties in the system. If the string already exists, a conflict error is returned.
 
 **Request**:
+
 ```json
 {
   "value": "Your string to analyze"
 }
 ```
+
 **Response**:
+
 ```json
 {
   "id": "e2fdc15c0e18987b2866c1f0b0941cfb1c31327170889270559d43d1a8c8e1e7",
@@ -109,13 +114,16 @@ Analyzes a given string and stores its properties in the system. If the string a
   "created_at": "2023-10-27T10:00:00.000Z"
 }
 ```
+
 **Errors**:
+
 - `400 Bad Request`: Missing "value" field in request body.
 - `409 Conflict`: String already exists in the system.
 - `422 Unprocessable Entity`: Invalid data type for "value" (must be string).
 - `500 Internal server error`.
 
 #### `GET /strings/{string_value}`
+
 Retrieves the analysis of a specific string. The `string_value` should be URL-encoded.
 
 **Request**:
@@ -123,6 +131,7 @@ Retrieves the analysis of a specific string. The `string_value` should be URL-en
 `GET /strings/hello%20world`
 
 **Response**:
+
 ```json
 {
   "id": "e2fdc15c0e18987b2866c1f0b0941cfb1c31327170889270559d43d1a8c8e1e7",
@@ -147,11 +156,14 @@ Retrieves the analysis of a specific string. The `string_value` should be URL-en
   "created_at": "2023-10-27T10:00:00.000Z"
 }
 ```
+
 **Errors**:
+
 - `404 Not Found`: String does not exist in the system.
 - `500 Internal server error`.
 
 #### `GET /strings`
+
 Retrieves all stored strings with optional filtering capabilities based on query parameters.
 
 **Request**:
@@ -159,6 +171,7 @@ Retrieves all stored strings with optional filtering capabilities based on query
 `GET /strings?is_palindrome=true&min_length=3&contains_character=a`
 
 **Response**:
+
 ```json
 {
   "data": [
@@ -188,16 +201,19 @@ Retrieves all stored strings with optional filtering capabilities based on query
   }
 }
 ```
+
 **Errors**:
+
 - `400 Bad Request`:
-    - Invalid value for `is_palindrome` (must be `true` or `false`).
-    - Invalid value for `min_length` or `max_length` (must be positive integer).
-    - `min_length` cannot be greater than `max_length`.
-    - Invalid value for `word_count` (must be positive integer).
-    - Invalid value for `contains_character` (must be a single character).
+  - Invalid value for `is_palindrome` (must be `true` or `false`).
+  - Invalid value for `min_length` or `max_length` (must be positive integer).
+  - `min_length` cannot be greater than `max_length`.
+  - Invalid value for `word_count` (must be positive integer).
+  - Invalid value for `contains_character` (must be a single character).
 - `500 Internal server error`.
 
 #### `GET /strings/filter-by-natural-language`
+
 Filters strings based on a natural language query string.
 
 **Request**:
@@ -205,6 +221,7 @@ Filters strings based on a natural language query string.
 `GET /strings/filter-by-natural-language?query=strings%20longer%20than%205%20characters%20containing%20the%20letter%20a%20and%20are%20palindromes`
 
 **Response**:
+
 ```json
 {
   "data": [
@@ -237,14 +254,17 @@ Filters strings based on a natural language query string.
   }
 }
 ```
+
 **Errors**:
+
 - `400 Bad Request`:
-    - Missing "query" parameter.
-    - Unable to parse natural language query.
+  - Missing "query" parameter.
+  - Unable to parse natural language query.
 - `422 Unprocessable Entity`: Conflicting filters (e.g., `min_length` cannot be greater than `max_length`).
 - `500 Internal server error`.
 
 #### `DELETE /strings/{string_value}`
+
 Deletes a specific string from the system. The `string_value` should be URL-encoded.
 
 **Request**:
@@ -254,6 +274,7 @@ Deletes a specific string from the system. The `string_value` should be URL-enco
 **Response**:
 `204 No Content` (successful deletion, no body returned).
 **Errors**:
+
 - `404 Not Found`: String does not exist in the system.
 - `500 Internal server error`.
 
@@ -261,12 +282,12 @@ Deletes a specific string from the system. The `string_value` should be URL-enco
 
 We welcome contributions to enhance this project! If you're interested in improving the String Analysis API, please follow these guidelines:
 
-*   **Fork the repository** 🍴.
-*   **Create a new branch** for your feature or bug fix: `git checkout -b feature/your-feature-name`.
-*   **Make your changes**, ensuring they adhere to the project's coding style.
-*   **Write clear, concise commit messages** explaining your changes.
-*   **Push your branch** to your forked repository.
-*   **Open a Pull Request** to the `main` branch of this repository, describing your changes in detail.
+- **Fork the repository** 🍴.
+- **Create a new branch** for your feature or bug fix: `git checkout -b feature/your-feature-name`.
+- **Make your changes**, ensuring they adhere to the project's coding style.
+- **Write clear, concise commit messages** explaining your changes.
+- **Push your branch** to your forked repository.
+- **Open a Pull Request** to the `main` branch of this repository, describing your changes in detail.
 
 ## 📄 License
 
@@ -275,9 +296,10 @@ This project is licensed under the ISC License - see the `package.json` file for
 ## ✍️ Author
 
 **Egede Kelechukwu Mark**
-*   **Email**: kelechimark041@gmail.com
-*   **LinkedIn**: [Your LinkedIn Profile](https://linkedin.com/in/yourusername) (Please replace with your actual LinkedIn profile)
-*   **Twitter**: [@your_twitter](https://twitter.com/your_twitter) (Please replace with your actual Twitter handle)
+
+- **Email**: kelechimark041@gmail.com
+- **LinkedIn**: [Kelechi Mark](https://www.linkedin.com/in/mhkaycey/)
+- **X**: [@mhkaycey](https://x.com/mhkaycey)
 
 ---
 
