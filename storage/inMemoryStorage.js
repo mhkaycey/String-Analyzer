@@ -8,9 +8,9 @@ class InMemoryStorage {
     return stringData;
   }
 
-  findByHash(hash) {
-    return this.strings.get(hash) || null;
-  }
+  // findByHash(hash) {
+  //   return this.strings.get(hash) || null;
+  // }
 
   findByValue(value) {
     const hash = this.generateSHA256(value);
@@ -21,7 +21,7 @@ class InMemoryStorage {
     return Array.from(this.strings.values());
   }
 
-  deleteByHash(hash) {
+  deleteValue(hash) {
     return this.strings.delete(hash);
   }
 

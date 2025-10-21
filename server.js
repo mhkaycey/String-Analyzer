@@ -18,6 +18,21 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK' });
 });
 
+app.get('/', (req, res) => {
+  res.status(200).json({ 
+    status: 'OK',
+    message: 'String Analysis API is running',
+    endpoints: {
+             create_string: "POST /strings",
+             get_string: "GET /strings/:stringValue",
+             list_strings: "GET /strings",
+             filter_natural_language: "GET /strings/filter-by-natural-language",
+             delete_string: "DELETE /strings/:stringValue"
+        }
+  
+  });
+});
+
 
 
 
